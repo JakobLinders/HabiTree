@@ -1,0 +1,52 @@
+﻿@*@using Microsoft.EntityFrameworkCore;
+@model DbSet<UserHabit>;*@
+
+@using HabiTree2.ViewModels;
+@model EditViewModel
+
+
+<html>
+<head>
+    <title>Edit</title>
+</head>
+
+<body>
+    <h1>Edit</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Habit.Name)
+
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Habit.Description)
+
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AllHabits)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Habit.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Habit.Description)
+                    </td>
+                    <td>
+                            <a asp-action="Edit" asp-route-id="@item.Habit.Id">Edit</a> |
+                            <a asp-action ="Delete" asp-route-id="@item.Habit.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+</body>
+
+</html>

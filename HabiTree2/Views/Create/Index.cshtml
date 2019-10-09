@@ -1,0 +1,97 @@
+﻿@model HabiTree2.ViewModels.CreateViewModel
+
+<html>
+<head>
+    <title>Create</title>
+</head>
+
+<body>
+    <h1>Create</h1>
+
+    <div class="row">
+        <div class="col">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="CreateHabit.Name" class="control-label font-weight-bold"></label>
+                    <input asp-for="CreateHabit.Name" class="form-control" />
+                    <span asp-validation-for="CreateHabit.Name" class="text-danger"></span>
+                </div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="CreateHabit.Description" class="control-label font-weight-bold"></label>
+                    <textarea asp-for="CreateHabit.Description" class="form-control"></textarea>
+
+                    <span asp-validation-for="CreateHabit.Description" class="text-danger"></span>
+                </div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="mb-2 font-weight-bold">Frequency</div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input asp-for="MondayChecked" type="checkbox" class="form-check-input" value="true">Monday
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input asp-for="TuesdayChecked" type="checkbox" class="form-check-input" value="true">Tuesday
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input asp-for="WednesdayChecked" type="checkbox" class="form-check-input" value="true">Wednesday
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input asp-for="ThursdayChecked" type="checkbox" class="form-check-input" value="true">Thursday
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input asp-for="FridayChecked" type="checkbox" class="form-check-input" value="true">Friday
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input asp-for="SaturdayChecked" type="checkbox" class="form-check-input" value="true">Saturday
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input asp-for="SundayChecked" type="checkbox" class="form-check-input" value="true">Sunday
+                    </label>
+                </div>
+                <div class="form-group mt-4">
+                    <button onclick="Sucess(this)" asp-action="Create" type="button" value="Save" class="btn btn-success">Create</button>
+                </div>
+                <div style="color:green" id="habitCreatedMessage"></div>
+            </form>
+
+            @*<form style="margin-top: 2em;">
+            <button asp-action="Seed" asp-controller="Create" class="btn btn-success">Seed</button>
+        </form>*@
+        </div>
+        <div class="col">
+
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+@*Javascripten ska eg inte ligga här....*@
+<script>
+
+    function Sucess(t) {
+
+        let xx = document.getElementById("habitCreatedMessage");
+        xx.innerHTML = "New habit successfully added!";
+
+        setTimeout(() => { t.form.submit() }, 1500)
+    }
+
+</script>
+
+

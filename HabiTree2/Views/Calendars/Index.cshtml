@@ -1,0 +1,191 @@
+﻿@model CalendarViewModel
+
+@section Scripts {
+    @*<script src="~/js/CalendarScript_Buttons.js" type="text/javascript"></script>*@
+}
+
+
+<style>
+    h1 {
+        text-align: center;
+    }
+
+    a {
+        text-decoration: none;
+        display: inline-block;
+        padding: 8px 16px;
+    }
+
+        a:hover {
+            color: black;
+        }
+
+    .previous {
+        color: black;
+    }
+
+    .next {
+        color: black;
+    }
+
+    .round {
+        border-radius: 50%;
+    }
+</style>
+
+
+
+<div>
+    <h1 class="text-center">@Model.Year</h1>
+    <form method="post" class="text-center">
+        <h3>
+            <a class="previous round" asp-route-mondaydate="@Model.MondayDate.AddDays(-7)" asp-controller="Calendars" asp-action="Index">&#8249;</a>
+            Week @Model.WeekNum
+            <a class="next round" asp-route-mondaydate="@Model.MondayDate.AddDays(7)" asp-controller="Calendars" asp-action="Index">&#8250;</a>
+        </h3>
+    </form>
+</div>
+
+<form asp-action="SaveStats">
+    <input asp-for="MondayDate" type="hidden" />
+    <table class="table table-bordered table-dark">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Habit</th>
+                <th scope="col">Monday      @Model.MondayDate.ToString("MMMM dd")</th>
+                <th scope="col">Tuesday     @Model.MondayDate.AddDays(1).ToString("MMMM dd")</th>
+                <th scope="col">Wednesday   @Model.MondayDate.AddDays(2).ToString("MMMM dd")</th>
+                <th scope="col">Thursday    @Model.MondayDate.AddDays(3).ToString("MMMM dd")</th>
+                <th scope="col">Friday      @Model.MondayDate.AddDays(4).ToString("MMMM dd")</th>
+                <th scope="col">Saturday    @Model.MondayDate.AddDays(5).ToString("MMMM dd")</th>
+                <th scope="col">Sunday      @Model.MondayDate.AddDays(6).ToString("MMMM dd")</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @*@foreach (CalendarViewModel.HabitDetails habitDetails in Model.habitsAndDetails)*@
+            @for (int i = 0; i < Model.habitsAndDetails.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Model.habitsAndDetails[i].HabitName
+                        <input asp-for="@Model.habitsAndDetails[i].HabitName" value="@Model.habitsAndDetails[i].HabitName" style="visibility: hidden; position: absolute" />
+                        <input asp-for="habitsAndDetails[i].habitId" type="hidden" />
+                    </td>
+
+                    @for (int j = 0; j < Model.habitsAndDetails[i].WeekStatuses.Length; j++)
+                    {
+                        if (Model.habitsAndDetails[i].WeekStatuses[j] != DayCodes.isNotPlanned)
+                        {
+                            if (Model.habitsAndDetails[i].WeekStatuses[j] == DayCodes.isDone)
+                            {
+                                <td id="@Model.habitsAndDetails[i].HabitName@j" class="bg-success" align="center" onclick="rotate('isMissed', this)">
+                                    <i class="fas fa-calendar-check" style="font-size: 50px"></i>
+                                    <input asp-for="@Model.habitsAndDetails[i].WeekStatuses[j]" value="6" style="visibility: hidden; position: absolute" />
+                                </td>
+                            }
+                            else if (Model.habitsAndDetails[i].WeekStatuses[j] == DayCodes.isMissed)
+                            {
+                                <td id="@Model.habitsAndDetails[i].HabitName@j" class="bg-danger" align="center" onclick="rotate('isVacant', this)">
+                                    <i class="fas fa-bed" style="font-size: 50px" ></i>
+                                    <input asp-for="@Model.habitsAndDetails[i].WeekStatuses[j]" value="7" style="visibility: hidden; position: absolute" />
+                                </td>
+                            }
+                            else
+                            {
+                                <td id="@Model.habitsAndDetails[i].HabitName@j" class="bg-warning" align="center" onclick="rotate('isDone', this)">
+                                    <i class="fas fa-question-circle" style="font-size: 50px"></i>
+                                    <input asp-for="@Model.habitsAndDetails[i].WeekStatuses[j]" value="5" style="visibility: hidden; position: absolute" />
+                                </td>
+                            }
+                        }
+                        else
+                        {
+                            @*<td class="bg-secondary"></td>*@
+                            <td id="@Model.habitsAndDetails[i].HabitName@j" align="center">
+                                <i></i>
+                                <input asp-for="@Model.habitsAndDetails[i].WeekStatuses[j]" value="0" style="visibility: hidden; position: absolute" />
+                            </td>
+                        }
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-2 offset-5">
+            <input type="submit" class="btn btn-primary" value="Save changes" />
+        </div>
+    </div>
+    
+</form>
+
+<script>
+
+    let isDone = "isDone";
+    let isMissed = "isMissed";
+    let isVacant = "isVacant";
+
+    function rotate(input, td) {
+
+
+        console.log(input);
+        console.log(td);
+        console.log(td.children[0]);
+        if (input === isDone) {
+
+            td.className = "bg-success";
+            td.children[0].className = "fas fa-calendar-check";
+            td.children[1].setAttribute("value", 6);
+            console.log(td.children[1]);
+            td.setAttribute("onClick", "rotate('isMissed', this)"); //cannot use td.onclick ="...", because the onclick will simply be a string.
+        }
+
+        else if (input === isMissed) {
+
+            td.className = "bg-danger";
+            td.children[0].className = "fas fa-bed";
+            td.children[1].setAttribute("value", 7);
+            console.log(td.children[1]);
+            td.setAttribute("onClick", "rotate('isVacant', this)"); //cannot use td.onclick ="...", because the onclick will simply be a string.
+        }
+
+        else if (input === isVacant) {
+
+            td.className = "bg-warning";
+            td.children[0].className = "fas fa-question-circle";
+            td.children[1].setAttribute("value", 5);
+            console.log(td.children[1]);
+            td.setAttribute("onClick", "rotate('isDone', this)"); //cannot use td.onclick ="...", because the onclick will simply be a string.
+        }
+
+        //missed
+
+
+        //XMLHttpRequest //used by browser to create request. When server respond, same object used.
+
+        //let xhr = new XMLHttpRequest();
+        //xhr.open('GET', '')
+        //var mess = "messet";
+
+
+        //jQuery.ajax({
+        //    url: "Calendars/SaveStats",
+        //    dataType: "json",
+        //    type: "POST",
+        //    contentType: "application/json",
+        //    data: JSON.stringify(mess),
+        //    success: function (data) {
+        //        console.log(data+"dfgdfg");
+        //    }
+        //});
+
+        console.log("------------");
+    }
+    //await fetch()
+</script>
+@*<div class="col-12">
+        <img class="img-fluid" src="~/images/pewtader.png" />
+    </div>*@
+
+@*<h1>SIgned in user: @Model.UserSignedIn</h1>*@

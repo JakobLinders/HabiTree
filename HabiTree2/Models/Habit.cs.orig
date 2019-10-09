@@ -1,0 +1,31 @@
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace HabiTree2.Models
+{
+    public class Habit
+    {
+        public int Id { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+        public string Description { get; set; }
+<<<<<<< HEAD
+
+        public HabitWeek[] HabitWeeks { get; set; }
+
+        public Habit()
+        {
+            HabitWeeks = new HabitWeek[52];
+            for (int i = 0; i < HabitWeeks.Length; i++)
+            {
+                HabitWeeks[i] = new HabitWeek();
+            }
+        }
+
+=======
+        public string Frequency { get; set; }
+        public List<UserHabit> UserHabits { get; set; }
+>>>>>>> 176cdc7d841fc717986aaff89bce11cdcc7b3907
+    }
+}

@@ -1,0 +1,55 @@
+﻿
+Removed home-button.
+Set so that login is required in order to see buttons Edit and/or create.
+in top of _Layout.cshtml : 
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+and added if-statements.
+//==////==////==////==////==////==////==////==////==//
+
+added many-to-many relation, though I had to drop database fully something wrong with identity,
+then removed all migrations
+created new migration "cleanstart"
+
+added code in ApplicationDbContext:
+  protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<UserHabit>().HasKey(x => new { x.AppUserId, x.HabitId});
+        }
+
+NOTE NOTE NOTE!!!
+AppUserId is a String, this was a prob. b4.
+----
+
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+dependency inejctopn för o använda. sen har man:
+
+@if (SignInManager.IsSignedIn(User)) {...}
+bilket kan användas igen.
+
+[Authorize(Roles = "Administrator")]
+[Authorize] - allmän.
+
+----
+
+Many-to-many relation:
+
+
+public class WolfFood
+    {
+        public int WolfId { get; set; }
+        public Wolf Wolf { get; set; }
+
+        public int FoodId { get; set; }
+        public Food Food { get; set; }
+    }
+
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<WolfFood>().HasKey(x => new { x.WolfId, x.FoodId });

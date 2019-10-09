@@ -1,0 +1,125 @@
+﻿@model HabiTree2.Models.UserHabit
+
+@*@model HabiTree2.Models.Habit*@
+
+@*@using HabiTree2.ViewModels;
+    @model EditViewModel*@
+
+@*@model HabiTree2.ViewModels.CreateViewModel*@
+
+
+<html>
+<head>
+    <title>Edit</title>
+</head>
+
+<body>
+
+    <h1>Edit</h1>
+
+    <h4>Product</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Habit.Name" class="control-label"></label>
+                    <input asp-for="Habit.Name" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Habit.Description" class="control-label"></label>
+                    <textarea asp-for="Habit.Description" class="form-control"></textarea>
+                </div>
+
+
+
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input asp-for="@Model.Monday_doHabit" type="checkbox" class="form-check-input">Monday
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input asp-for="@Model.Tuesday_doHabit" type="checkbox" class="form-check-input">Tuesday
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input asp-for="@Model.Wednesday_doHabit" type="checkbox" class="form-check-input">Wednesday
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input asp-for="@Model.Thursday_doHabit" type="checkbox" class="form-check-input">Thursday
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input asp-for="@Model.Friday_doHabit" type="checkbox" class="form-check-input">Friday
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input asp-for="@Model.Saturday_doHabit" type="checkbox" class="form-check-input">Saturday
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input asp-for="@Model.Sunday_doHabit" type="checkbox" class="form-check-input">Sunday
+                    </label>
+                </div>
+                
+                @*@foreach (var item in Model.Habit.UserHabits)
+        {
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input asp-for="@item.Monday_doHabit" type="checkbox" class="form-check-input">Monday
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input asp-for="@item.Tuesday_doHabit" type="checkbox" class="form-check-input">Tuesday
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input asp-for="@item.Wednesday_doHabit" type="checkbox" class="form-check-input">Wednesday
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input asp-for="@item.Thursday_doHabit" type="checkbox" class="form-check-input">Thursday
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input asp-for="@item.Friday_doHabit" type="checkbox" class="form-check-input">Friday
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input asp-for="@item.Saturday_doHabit" type="checkbox" class="form-check-input">Saturday
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input asp-for="@item.Sunday_doHabit" type="checkbox" class="form-check-input">Sunday
+                </label>
+            </div>
+        }*@
+
+                <div class="form-group mt-4">
+                    <input type="submit" value="Save" class="btn btn-success" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+
+</body>
+</html>
